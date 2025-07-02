@@ -8,5 +8,7 @@ namespace WebApiProj1.Services.Interfaces
     {
         Task<GenericRes<Books>> AddBook(AddBooksDTO model);
         Task<GenericRes<List<Books>>> GetAllBooks();
+
+        Task<GenericRes<Books>> GetBooksById(int id);    
     }
 }

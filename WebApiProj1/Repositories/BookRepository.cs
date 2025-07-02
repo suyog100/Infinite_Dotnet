@@ -24,5 +24,11 @@ namespace WebApiProj1.Repositories
         {
             return await _dbContext.Books.ToListAsync();
         }
+
+        public async Task<Books> GetBooksById(int id)
+        {
+          var result = await _dbContext.Books.Where(x=> x.BookId ==id).FirstAsync();
+                return result;
+        }
     }
 }

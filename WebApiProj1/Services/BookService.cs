@@ -49,5 +49,15 @@ namespace WebApiProj1.Services
                 Message = "All Books Listed"
             };
         }
+
+        public async Task<GenericRes<Books>> GetBooksById( int id)
+        {
+            var res = await _repo.GetBooksById(id);
+            return new GenericRes<Books>
+            {
+                Data = res,
+                Message = "All Books Listed"
+            };
+        }
     }
 }

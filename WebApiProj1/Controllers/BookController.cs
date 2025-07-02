@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using WebApiProj1.Models;
 using WebApiProj1.Models.DTOs;
+using WebApiProj1.Models.Entities;
+using WebApiProj1.Services;
 using WebApiProj1.Services.Interfaces;
 
 namespace WebApiProj1.Controllers
@@ -27,5 +31,13 @@ namespace WebApiProj1.Controllers
             var res = await _bookService.GetAllBooks();
             return Ok(res);
         }
+
+        [HttpGet("books/{id}")]
+        public async Task<GenericRes<Books>> GetBooksById(int id)
+        {
+            var result = await _bookService.GetBooksById(id);
+            return result;
+        }
+
     }
 }

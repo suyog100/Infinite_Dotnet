@@ -59,5 +59,15 @@ namespace WebApiProj1.Services
                 Message = "All Books Listed"
             };
         }
+
+        public async Task<GenericRes<string>> DeleteBookById(int id)
+        {
+            await _repo.DeleteBookById(id);
+            return new GenericRes<string>()
+            {
+                Data = null,
+                Message = "Delete Successfully"
+            };
+        }
     }
 }

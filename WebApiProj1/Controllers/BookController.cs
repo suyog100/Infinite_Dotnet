@@ -39,5 +39,12 @@ namespace WebApiProj1.Controllers
             return result;
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            var result = await _bookService.DeleteBookById(id);
+            return Ok(result);
+        }
+
     }
 }

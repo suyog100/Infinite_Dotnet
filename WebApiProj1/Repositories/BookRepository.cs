@@ -30,5 +30,12 @@ namespace WebApiProj1.Repositories
           var result = await _dbContext.Books.Where(x=> x.BookId ==id).FirstAsync();
                 return result;
         }
+
+        public async Task DeleteBookById(int id)
+        {
+            var book = await GetBooksById(id);
+            _dbContext.Books.Remove(book);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -40,6 +40,26 @@ namespace WebApiProj1.Services
             };
         }
 
+        public async Task<GenericRes<string>> DeleteBook(int id)
+        {
+            var existingBook = await _repo.GetById(id);
+            if (existingBook == null)
+            {
+                return new GenericRes<string>
+                {
+                    Data = null,
+                    Message = "There is no book to delete"
+                };
+            }
+
+            await _repo.DeleteBook(existingBook);
+            return new GenericRes<string>
+            {
+                Data = null,
+                Message = "Book deleted"
+            };
+        }
+
         public async Task<GenericRes<List<Books>>> GetAllBooks()
         {
             var res = await _repo.GetAllBooks();
@@ -50,23 +70,52 @@ namespace WebApiProj1.Services
             };
         }
 
-        public async Task<GenericRes<Books>> GetBooksById( int id)
+        public async Task<GenericRes<Books>> GetBookById(int id)
         {
-            var res = await _repo.GetBooksById(id);
+            var res = await _repo.GetById(id);
+            if (res is null)
+            {
+                return new GenericRes<Books>
+                {
+                    Data = null,
+                    Message = $"There is no book with id: {id}"
+                };
+            }
             return new GenericRes<Books>
             {
                 Data = res,
-                Message = "All Books Listed"
+                Message = "Book loaded by id"
             };
         }
 
-        public async Task<GenericRes<string>> DeleteBookById(int id)
+        public async Task<GenericRes<Books>> UpdateBook(UpdateBookDTO model)
         {
-            await _repo.DeleteBookById(id);
-            return new GenericRes<string>()
+            var existingBook = await _repo.GetById(model.BookId);
+            if (existingBook is null)
             {
-                Data = null,
-                Message = "Delete Successfully"
+                return new GenericRes<Books>
+                {
+                    Data = null,
+                    Message = "There is no book to update"
+                };
+            }
+
+            existingBook.BookName = model.BookName;
+            existingBook.BookPrice = model.BookPrice;
+
+            var res = await _repo.UpdateBook(existingBook);
+            if (res is null)
+            {
+                return new GenericRes<Books>
+                {
+                    Data = null,
+                    Message = "Error while updating"
+                };
+            }
+            return new GenericRes<Books>
+            {
+                Data = res,
+                Message = "Book updated"
             };
         }
     }

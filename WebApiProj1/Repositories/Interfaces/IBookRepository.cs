@@ -6,10 +6,8 @@ namespace WebApiProj1.Repositories.Interfaces
     {
         Task<Books> CreateBook(Books model);
         Task<List<Books>> GetAllBooks();
-
-        Task<Books> GetBooksById(int id);
-
-        Task DeleteBookById(int id);
-
+        Task<Books> GetById(int id);
+        Task<Books> UpdateBook(Books model);
+        Task DeleteBook(Books model);
     }
 }

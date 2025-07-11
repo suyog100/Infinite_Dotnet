@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using WebApiProj1.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApiProj1.Models.DTOs;
-using WebApiProj1.Models.Entities;
-using WebApiProj1.Services;
 using WebApiProj1.Services.Interfaces;
 
 namespace WebApiProj1.Controllers
@@ -32,19 +28,27 @@ namespace WebApiProj1.Controllers
             return Ok(res);
         }
 
-        [HttpGet("books/{id}")]
-        public async Task<GenericRes<Books>> GetBooksById(int id)
+        [HttpGet("get-by-id/{id}")]
+        public async Task<IActionResult> GetBooks(int id)
         {
-            var result = await _bookService.GetBooksById(id);
-            return result;
+            var res = await _bookService.GetBookById(id);
+            return Ok(res);
         }
+
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateBook(UpdateBookDTO model)
+        {
+            var res = await _bookService.UpdateBook(model);
+            return Ok(res);
+        }
+
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBook(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = await _bookService.DeleteBookById(id);
-            return Ok(result);
+            var res = await _bookService.DeleteBook(id);
+            return Ok(res);
         }
-
     }
 }
